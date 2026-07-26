@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <h1>Työssäoppimispaikka-tracker</h1>
+ <form id="lomake">
+    <input type="text" id="nimi" placeholder="Yrityksen nimi" required>
+
+    <select id="tila">
+        <option value="aion hakea">Aion hakea</option>
+        <option value="hakenut">Hakenut</option>
+        <option value="haastattelu">Haastattelu</option>
+        <option value="hyväksytty">Hyväksytty</option>
+        <option value="hylätty">Hylätty</option>
+    </select>
+
+    <input type="text" id="yhteyshenkilo" placeholder="Yhteyshenkilö">
+    <input type="text" id="muistiinpanot" placeholder="Muistiinpanot">
+    <input type="date" id="hakupaiva">
+
+    <button type="submit">Lisää</button>
+</form>
+
+<div id="lista"></div>
+<script src="app.js"></script>
+</body>
+</html>
