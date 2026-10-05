@@ -1,6 +1,15 @@
 let muokattavaId = null;
 let kaikkiYritykset = [];
 
+function escapeHtml(arvo) {
+    return String(arvo ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 function haeYritykset() {
     fetch('/yritykset')
         .then(response => response.json())
@@ -12,10 +21,10 @@ function haeYritykset() {
             yritykset.forEach(yritys => {
                 lista.innerHTML += `
                     <div>
-                        <strong>${yritys.nimi}</strong> — ${yritys.tila}<br>
-                        ${yritys.yhteyshenkilo}<br>
-                        ${yritys.muistiinpanot}<br>
-                        ${yritys.hakupaiva}<br>
+                        <strong>${escapeHtml(yritys.nimi)}</strong> — ${escapeHtml(yritys.tila)}<br>
+                        ${escapeHtml(yritys.yhteyshenkilo)}<br>
+                        ${escapeHtml(yritys.muistiinpanot)}<br>
+                        ${escapeHtml(yritys.hakupaiva)}<br>
                         <button onclick="poistaYritys(${yritys.id})">Poista</button>
                         <button onclick="muokkaaYritys(${yritys.id})">Muokkaa</button>
                     </div>
@@ -62,10 +71,10 @@ function muokkaaYritys(id) {
     const yritys = kaikkiYritykset.find(y => y.id === id);
 
     document.getElementById('nimi').value = yritys.nimi;
-    document.getElementById('tila').value = yritys.tila;
-    document.getElementById('yhteyshenkilo').value = yritys.yhteyshenkilo;
-    document.getElementById('muistiinpanot').value = yritys.muistiinpanot;
-    document.getElementById('hakupaiva').value = yritys.hakupaiva;
+    document.getElementById('tila').value = yritys.tila ?? '';
+    document.getElementById('yhteyshenkilo').value = yritys.yhteyshenkilo ?? '';
+    document.getElementById('muistiinpanot').value = yritys.muistiinpanot ?? '';
+    document.getElementById('hakupaiva').value = yritys.hakupaiva ?? '';
 
     muokattavaId = id;
 }
