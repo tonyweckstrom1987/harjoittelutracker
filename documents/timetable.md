@@ -3,7 +3,7 @@
 Tilaaja: Lauri Ahmas · Toteuttaja: Tony Weckström.
 Tavoite: projekti on dokumentoitu, testattu ja julkinen GitHubissa tilaajalle toimitettavaksi.
 
-Tilat: **Valmis** = tehty ennen lopputehtävää · **Suunniteltu** = tehdään tästä eteenpäin.
+Tilat: **Valmis** = tehty · **Suunniteltu** = tehdään tästä eteenpäin.
 Suunniteltujen vaiheiden viikot ovat ehdotus; lopullinen deadline sovitaan tilaajan kanssa (ei vielä tiedossa).
 
 | Vaihe | Sisältö | Tuotos | Tila |
@@ -12,10 +12,10 @@ Suunniteltujen vaiheiden viikot ovat ehdotus; lopullinen deadline sovitaan tilaa
 | 2. Backend ja tietokanta | Express-palvelin, SQLite-taulu `yritykset`, neljä reittiä | `index.js` | Valmis |
 | 3. Frontend | Käyttöliittymä listan katseluun ja muokkaukseen | `public/` | Valmis |
 | 4. Dokumentaatio (vk 41, 5.10.–11.10.) | UML-kaavio, aikataulu, testaussuunnitelma, README | `documents/`, README | Valmis (5.10.2026) |
-| 5. Testaus (vk 41–42) | Testitapaukset ajetaan, tulokset raporttiin | `documents/testraport.md` | API-testit tehty 5.10.2026; käyttöliittymätesti (TC-UI-01) jäljellä |
-| 6. Korjaukset (vk 42–43) | Syötteen tarkistus, 404 olemattomalle id:lle, selkeät virheilmoitukset | päivitetty `index.js` | Suunniteltu |
-| 7. Regressiotestaus (vk 43) | Testit ajetaan uudelleen korjausten jälkeen | päivitetty testiraportti | Suunniteltu |
-| 8. Toimitus | Repo julkiseksi tarkistettu, linkki tilaajalle | GitHub-linkki | Suunniteltu |
+| 5. Testaus (vk 41–42) | Testitapaukset ajetaan, tulokset raporttiin | `documents/testraport.md` | API-testit tehty 5.10.2026 (ajo 1); käyttöliittymätesti (TC-UI-01) jäljellä |
+| 6. Korjaukset (vk 42–43) | Syötteen tarkistus, 404 olemattomalle id:lle, selkeät virheilmoitukset | päivitetty `index.js` | Valmis (5.10.2026) |
+| 7. Regressiotestaus (vk 43) | Testit ajetaan uudelleen korjausten jälkeen | päivitetty testiraportti | API-testit ajettu 5.10.2026 (ajo 2); UI-testi (TC-UI-01) jäljellä |
+| 8. Toimitus | Repo julkiseksi tarkistettu, linkki tilaajalle | GitHub-linkki | Linkki lähetetty 5.10.2026 |
 
 ## Välitavoitteet (tilaajalle raportoitavat)
 
@@ -24,7 +24,7 @@ Suunniteltujen vaiheiden viikot ovat ehdotus; lopullinen deadline sovitaan tilaa
 | Dokumentaatio valmis | vk 41 |
 | Testiraportti ensimmäinen versio | vk 41 |
 | Korjatut virheet ja uusi testiraportti | vk 43 |
-| Toimitus tilaajalle | sovitaan |
+| Toimitus tilaajalle | sovitaan (linkki lähetetty 5.10.2026) |
 
 ## Työaikakirjaus
 
