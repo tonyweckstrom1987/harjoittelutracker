@@ -1,14 +1,15 @@
 {
   "name": "harjoittelutracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "Työssäoppimispaikkojen seurantatyökalu: Node.js/Express-backend ja SQLite-tietokanta",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Tony Weckström",
+  "license": "MIT",
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1"
