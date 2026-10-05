@@ -29,7 +29,7 @@ harjoittelutracker/
 ├── tracker.db        # SQLite-tietokanta (syntyy ajettaessa)
 ├── public/           # Selainpuoli (HTML, CSS, JS)
 ├── documents/        # Lopputehtävän dokumentit
-└── Readme.md
+└── README.md
 ```
 
 ## Arkkitehtuuri ja tietokanta
