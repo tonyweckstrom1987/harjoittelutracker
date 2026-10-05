@@ -9,11 +9,11 @@
 | Testauksen kohde | REST-reitit `/yritykset` (GET, POST, PUT, DELETE) ja tietokannan toiminta |
 | Testauspäivä | 5.10.2026 (ajo 1: ennen korjauksia, ajo 2: korjausten jälkeen) |
 | Ympäristö | Node.js v22.22.0, Express, `node:sqlite`, uusi tyhjä `tracker.db`; testit ajettu `curl`-kutsuilla. Koodi: `index.js` GitHubin `main`-haarasta. Testit ajoi Claude (tekoäly) Tonyn pyynnöstä erillisessä ympäristössä. |
-| Suoritetut testit | 10 / 11 testitapausta (TC-UI-01 ei vielä suoritettu) |
+| Suoritetut testit | 11 / 11 testitapausta |
 | Tulokset ajo 1 (ennen korjauksia) | **Pass: 7 · Fail: 3** |
-| Tulokset ajo 2 (korjausten jälkeen) | **Pass: 10 · Fail: 0** (TC-UI-01 ei vielä ajettu) |
+| Tulokset ajo 2 (korjausten jälkeen) | **Pass: 11 · Fail: 0** (API-testit curlilla, TC-UI-01 selaimella, ks. ajo 3) |
 | Havaitut ongelmat | Ks. alla (3 virhettä + 1 lisähavainto) |
-| Johtopäätös tilaajalle | Ajossa 1 perustoiminnot toimivat, mutta syötteen tarkistus ja virheenkäsittely puuttuivat. Ne korjattiin samana päivänä (ks. ajo 2 alla), ja kaikki ajetut testit menevät nyt läpi. Jäljellä on käyttöliittymätesti (TC-UI-01). |
+| Johtopäätös tilaajalle | Ajossa 1 perustoiminnot toimivat, mutta syötteen tarkistus ja virheenkäsittely puuttuivat. Ne korjattiin samana päivänä (ks. ajo 2 alla), ja kaikki ajetut testit menevät nyt läpi. Käyttöliittymätesti (TC-UI-01) ajettiin myös ja meni läpi (ajo 3). |
 
 ## Tulokset, ajo 1 (ennen korjauksia)
 
@@ -63,11 +63,20 @@ Ajo 2 tehtiin samalla tavalla kuin ajo 1 (Node.js v22.22.0, `curl`, uusi tyhjä 
 | TC-DEL-01 | Yritys poistui, HTTP 200 | Pass |
 | TC-DEL-02 | Olematon id 99999: HTTP 404 "Yritystä ei löytynyt" | Pass |
 | TC-DB-01 | Uudelleenkäynnistyksen jälkeen kaikki rivit tallessa | Pass |
-| TC-UI-01 | Ei vielä ajettu | — |
+| TC-UI-01 | Ajettu ajossa 3 | Pass |
 
 Regressio: SQL-injektioyritys tallentui tekstinä ja taulu säilyi, virheellinen JSON palautti HTTP 400 (ei muutosta ajoon 1 verrattuna).
 
-Huom: korjausten vaikutusta `public/`-käyttöliittymään ei ole vielä testattu. Se tehdään TC-UI-01:ssä.
+Huom: korjausten vaikutus `public/`-käyttöliittymään testattiin ajossa 3.
+
+## Ajo 3: käyttöliittymä (TC-UI-01) ja XSS-korjaus
+
+Ajettu 5.10.2026 automatisoidulla selaimella (Playwright, Chromium, ajaja Claude) paikallista palvelinta vasten, uusi tyhjä `tracker.db`. Koodi: GitHubin `main`, korjausten jälkeen.
+
+| ID | Toteutunut tulos | Status |
+|---|---|---|
+| TC-UI-01 | Lomakkeen täyttö (nimi, tila, yhteyshenkilö, muistiinpano, päivä) ja lähetys: yritys ilmestyi listaan kaikkine kenttineen | Pass |
+| Lisätesti: HTML nimessä | Nimeksi `<img src=x onerror=alert(1)>`: teksti näkyy sellaisenaan, ei `img`-elementtiä sivulla, ei dialogeja (`escapeHtml` toimii) | Pass |
 
 ## Lisätestit (suunnitelman ulkopuolella, ajo 1)
 
@@ -78,11 +87,10 @@ Huom: korjausten vaikutusta `public/`-käyttöliittymään ei ole vielä testatt
 
 ## Jäljellä olevat riskit
 
-- Käyttöliittymää ei ole testattu, joten lomakkeen toiminta korjausten jälkeen on varmistamatta (TC-UI-01).
 - Testit on ajettu käsin curlilla; automaattisia testejä ei ole.
-- Havainto koodista (ei testattu): käyttöliittymä piirtää tallennetut tiedot `innerHTML`:llä, joten HTML-merkit nimessä tai muistiinpanoissa tulkitaan koodina. Kannattaa korjata ennen kuin sovellus on muiden käytössä.
+- XSS-riski (`innerHTML`) korjattiin `escapeHtml`-funktiolla ja varmistettiin ajossa 3.
+- Käyttöliittymä ei näytä virheilmoituksia (esim. 400-vastaus tyhjästä nimestä ei näy käyttäjälle); lomakkeen `required`-kenttä estää tyhjän nimen selaimessa.
 
 ## Seuraavat toimet
 
-1. Suorita TC-UI-01 selaimessa.
-2. Harkitse automaattisia testejä jatkokehityksenä.
+1. Harkitse automaattisia testejä (esim. Playwright tai Node-testiajuri) jatkokehityksenä.
