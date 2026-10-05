@@ -14,7 +14,7 @@ Lopputehtävässä projekti on toteutettu tilaustyönä: tilaaja (työnantaja) L
 
 1. Kloonaa repo
 2. Aja `npm install` (asentaa Expressin)
-3. Aja `node index.js`
+3. Aja `npm start`
 4. Avaa selaimessa `localhost:3000`
 
 ## Miksi oma backend
@@ -62,3 +62,7 @@ Lopputehtävän dokumentit ovat kansiossa [`documents/`](documents/):
 ## Testauksen tilanne
 
 API-testit ajettiin 5.10.2026 kahdesti. Ajossa 1 löytyi kolme virhettä (tyhjä nimi hyväksyttiin, puuttuvat kentät aiheuttivat HTTP 500 -virheen, olemattoman id:n päivitys ja poisto palauttivat onnistumisen). Ne korjattiin `index.js`:ään, ja ajossa 2 kaikki 10 ajettua testiä meni läpi. Käyttöliittymätesti (TC-UI-01) on vielä ajamatta. Yksityiskohdat: [testraport.md](documents/testraport.md).
+
+## Lisenssi
+
+MIT, ks. [LICENSE](LICENSE).
