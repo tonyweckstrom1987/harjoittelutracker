@@ -15,6 +15,7 @@ db.exec(`
         hakupaiva TEXT
     )
 `);
+
 app.get('/', (req, res) => {
     res.send('Palvelin toimii!');
 });
@@ -25,20 +26,32 @@ app.get('/yritykset', (req, res) => {
     res.json(yritykset);
 });
 
+function nimiOnValidi(nimi) {
+    return typeof nimi === 'string' && nimi.trim() !== '';
+}
+
 app.post('/yritykset', (req, res) => {
     const { nimi, tila, yhteyshenkilo, muistiinpanot, hakupaiva } = req.body;
+
+    if (!nimiOnValidi(nimi)) {
+        return res.status(400).json({ virhe: 'Nimi on pakollinen' });
+    }
 
     const lisaaYritys = db.prepare(
         'INSERT INTO yritykset (nimi, tila, yhteyshenkilo, muistiinpanot, hakupaiva) VALUES (?, ?, ?, ?, ?)'
     );
-    lisaaYritys.run(nimi, tila, yhteyshenkilo, muistiinpanot, hakupaiva);
+    lisaaYritys.run(nimi, tila ?? null, yhteyshenkilo ?? null, muistiinpanot ?? null, hakupaiva ?? null);
 
     res.status(201).json({ viesti: 'Yritys lisätty' });
 });
 
 app.delete('/yritykset/:id', (req, res) => {
     const poistaYritys = db.prepare('DELETE FROM yritykset WHERE id = ?');
-    poistaYritys.run(req.params.id);
+    const tulos = poistaYritys.run(req.params.id);
+
+    if (tulos.changes === 0) {
+        return res.status(404).json({ virhe: 'Yritystä ei löytynyt' });
+    }
 
     res.json({ viesti: 'Yritys poistettu' });
 });
@@ -46,12 +59,28 @@ app.delete('/yritykset/:id', (req, res) => {
 app.put('/yritykset/:id', (req, res) => {
     const { nimi, tila, yhteyshenkilo, muistiinpanot, hakupaiva } = req.body;
 
+    if (!nimiOnValidi(nimi)) {
+        return res.status(400).json({ virhe: 'Nimi on pakollinen' });
+    }
+
     const paivitaYritys = db.prepare(
         'UPDATE yritykset SET nimi = ?, tila = ?, yhteyshenkilo = ?, muistiinpanot = ?, hakupaiva = ? WHERE id = ?'
     );
-    paivitaYritys.run(nimi, tila, yhteyshenkilo, muistiinpanot, hakupaiva, req.params.id);
+    const tulos = paivitaYritys.run(nimi, tila ?? null, yhteyshenkilo ?? null, muistiinpanot ?? null, hakupaiva ?? null, req.params.id);
+
+    if (tulos.changes === 0) {
+        return res.status(404).json({ virhe: 'Yritystä ei löytynyt' });
+    }
 
     res.json({ viesti: 'Yritys päivitetty' });
+});
+
+app.use((err, req, res, next) => {
+    if (err.type === 'entity.parse.failed') {
+        return res.status(400).json({ virhe: 'Virheellinen JSON' });
+    }
+    console.error(err);
+    res.status(500).json({ virhe: 'Palvelinvirhe' });
 });
 
 app.listen(3000, () => {
