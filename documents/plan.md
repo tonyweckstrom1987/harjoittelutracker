@@ -53,13 +53,13 @@ SQLite-tietokanta (tracker.db, taulu: yritykset)
 - Yrityksen voi lisätä, hakea, päivittää ja poistaa.
 - Tiedot säilyvät palvelimen uudelleenkäynnistyksen yli.
 - Projektin voi käynnistää README:n ohjeilla (`npm install`, `node index.js`).
-- Virhetilanteissa käyttäjä saa selkeän viestin (ei pinojälkeä) — **tämä ei vielä täyty, ks. testiraportti**.
+- Virhetilanteissa käyttäjä saa selkeän viestin (ei pinojälkeä) — täyttyy 5.10.2026 tehtyjen korjausten jälkeen (ks. testiraportti, ajo 2).
 - Dokumentaatio (UML, aikataulu, testaussuunnitelma, testiraportti) on repossa.
 
 ## Riskit
 
 | Riski | Vaikutus | Hallinta |
 |---|---|---|
-| Syötteen tarkistus puuttuu | Virheelliset tai puuttuvat tiedot kaatavat pyynnön | Validointi lisätään korjausvaiheessa |
+| Syötteen tarkistus puuttui | Virheelliset tai puuttuvat tiedot kaatoivat pyynnön | Validointi lisätty 5.10.2026 |
 | Aikataulu venyy | Palautus myöhästyy | Korjaukset priorisoidaan vakavuuden mukaan |
 | Tietokantatiedosto katoaa | Data menetetään | `tracker.db` pidetään pois versionhallinnasta, varmuuskopio käsin |
